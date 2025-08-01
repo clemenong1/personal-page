@@ -7,7 +7,7 @@ const Education: React.FC = () => {
       icon: FaUsers,
       title: 'Floorball Interest Group Leader',
       organization: 'NUS Pioneer House',
-      description: 'Leading and organizing sports activities for the residential community.'
+      description: 'Leading and organizing floorball sessions for the residential community.'
     },
     {
       icon: FaUsers,
@@ -24,7 +24,7 @@ const Education: React.FC = () => {
   ];
 
   return (
-    <section id="education" className="py-20 bg-dark-card">
+    <section id="education" className="h-full py-20 bg-dark-card">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="section-title">Education & Activities</h2>
@@ -41,14 +41,25 @@ const Education: React.FC = () => {
               <h3 className="text-2xl font-bold text-white">Education</h3>
             </div>
             
-            <div className="space-y-4">
+            <div className="space-y-6">
               <div>
                 <h4 className="text-xl font-semibold text-white mb-2">
                   National University of Singapore
                 </h4>
                 <p className="text-gray-300 mb-1">Bachelor of Computing in Computer Science</p>
-                <p className="text-accent-blue font-medium">GPA: 5.00/5.00</p>
-                <p className="text-sm text-gray-400 mt-2">Expected Graduation: 2026</p>
+
+                <p className="text-sm text-gray-400 mt-2">Expected Graduation: 2027</p>
+              </div>
+              
+              {/* Divider */}
+              <div className="border-t border-gray-700 my-4"></div>
+              
+              <div>
+                <h4 className="text-xl font-semibold text-white mb-2">
+                  Eunoia Junior College
+                </h4>
+                <p className="text-accent-blue font-medium">Grades: AAA/A</p>
+                <p className="text-sm text-gray-400 mt-2">Graduated in: 2021</p>
               </div>
             </div>
           </div>

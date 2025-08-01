@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaGithub, FaLinkedin, FaEnvelope, FaPhone } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 
 const Hero: React.FC = () => {
   const socialLinks = [
@@ -17,16 +17,11 @@ const Hero: React.FC = () => {
       name: 'Email',
       url: 'mailto:clemenongjunkai@gmail.com',
       icon: FaEnvelope
-    },
-    {
-      name: 'Phone',
-      url: 'tel:+6591282681',
-      icon: FaPhone
     }
   ];
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center pt-16">
+    <section id="home" className="h-full flex items-center justify-center pt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           {/* Profile Image Placeholder */}
@@ -41,12 +36,12 @@ const Hero: React.FC = () => {
             Hi, I'm <span className="gradient-text">Clemen!</span>
           </h1>
           <h2 className="text-2xl md:text-3xl text-gray-300 mb-8">
-            Welcome to my Portfolio
+            Welcome to my website!
           </h2>
 
           {/* Bio */}
           <p className="text-lg md:text-xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed">
-            I'm a Computer Science student at NUS focused on creating secure, high-performance applications and impactful tech solutions. My expertise lies in full-stack development, machine learning, and building apps that make a difference—from health to sports to cybersecurity.
+            I'm a passionate developer and NUS Computer Science undergraduate with interests in full-stack development, machine learning, and impactful tech for good.
           </p>
 
           {/* Social Links */}

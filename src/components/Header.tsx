@@ -1,17 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   const navItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'Professional Work', href: '#professional-work' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Personal Projects', href: '#personal-projects' },
-    { name: 'Education', href: '#education' },
-    { name: 'Contact', href: '#contact' }
+    { name: 'Home', href: '#home', id: 'home' },
+    { name: 'Professional Work', href: '#professional-work', id: 'professional-work' },
+    { name: 'Skills', href: '#skills', id: 'skills' },
+    { name: 'Personal Projects', href: '#personal-projects', id: 'personal-projects' },
+    { name: 'Education', href: '#education', id: 'education' },
+    { name: 'Contact', href: '#contact', id: 'contact' }
   ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = document.querySelectorAll('.hero-section, .professional-work-section, .scroll-snap-section');
+      const scrollPosition = window.scrollY + window.innerHeight / 3;
+      
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i] as HTMLElement;
+        if (section.offsetTop <= scrollPosition) {
+          // Find the corresponding nav item
+          const sectionId = section.querySelector('section')?.id || '';
+          if (sectionId && sectionId !== activeSection) {
+            setActiveSection(sectionId);
+          }
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [activeSection]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -38,7 +61,11 @@ const Header: React.FC = () => {
               <a
                 key={item.name}
                 href={item.href}
-                className="text-gray-300 hover:text-white transition-colors duration-200 font-medium"
+                className={`transition-colors duration-200 font-medium ${
+                  activeSection === item.id 
+                    ? 'text-accent-blue' 
+                    : 'text-gray-300 hover:text-white'
+                }`}
                 onClick={closeMenu}
               >
                 {item.name}
@@ -66,7 +93,11 @@ const Header: React.FC = () => {
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors"
+                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                    activeSection === item.id 
+                      ? 'text-accent-blue bg-dark-border' 
+                      : 'text-gray-300 hover:text-white'
+                  }`}
                   onClick={closeMenu}
                 >
                   {item.name}

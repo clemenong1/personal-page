@@ -26,7 +26,7 @@ const Footer: React.FC = () => {
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           {/* Copyright */}
           <div className="text-gray-400 text-sm">
-            © 2025 Clemen Ong Jun Kai. All rights reserved.
+            © 2025 Clemen Ong. All rights reserved.
           </div>
 
           {/* Social Links */}

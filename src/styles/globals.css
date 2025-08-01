@@ -5,6 +5,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
   }
   
   body {
@@ -12,6 +13,13 @@
     background-color: #1a1a1a;
     color: #ffffff;
     line-height: 1.6;
+  }
+
+  /* Mobile scroll snap adjustments */
+  @media (max-width: 768px) {
+    html {
+      scroll-snap-type: y proximity;
+    }
   }
 }
 
@@ -38,6 +46,22 @@
   
   .gradient-text {
     @apply bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent;
+  }
+
+  /* Scroll snap section classes */
+  .scroll-snap-section {
+    scroll-snap-align: start;
+    min-height: 100vh;
+  }
+
+  .hero-section {
+    scroll-snap-align: start;
+    height: 100vh;
+  }
+
+  .professional-work-section {
+    scroll-snap-align: start;
+    min-height: 100vh;
   }
 }
 
