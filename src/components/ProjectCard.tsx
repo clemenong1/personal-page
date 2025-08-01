@@ -11,7 +11,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     <div className="card group">
       {/* Project Image */}
       <div className="relative overflow-hidden rounded-lg mb-4 bg-dark-border">
-        <div className="aspect-video bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+        {project.image ? (
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full aspect-video object-cover"
+            onError={(e) => {
+              // Fallback to placeholder if image fails to load
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+              target.nextElementSibling?.classList.remove('hidden');
+            }}
+          />
+        ) : null}
+        <div className={`aspect-video bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center ${project.image ? 'hidden' : ''}`}>
           <span className="text-2xl font-bold text-white opacity-60">
             {project.title.split(' ').map(word => word[0]).join('')}
           </span>
