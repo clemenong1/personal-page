@@ -40,6 +40,31 @@
     @apply bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent;
   }
 
+  /* Background image fade effect */
+  .bg-image-fade {
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      transparent 50%,
+      rgba(26, 26, 26, 0.1) 60%,
+      rgba(26, 26, 26, 0.2) 70%,
+      rgba(26, 26, 26, 0.4) 80%,
+      rgba(26, 26, 26, 0.6) 85%,
+      rgba(26, 26, 26, 0.8) 90%,
+      rgba(26, 26, 26, 1) 100%
+    );
+  }
+
+  .bg-image-fade-bottom {
+    background: linear-gradient(
+      to top,
+      rgba(26, 26, 26, 1) 0%,
+      rgba(26, 26, 26, 0.8) 30%,
+      rgba(26, 26, 26, 0.3) 60%,
+      transparent 100%
+    );
+  }
+
   /* Section classes - no scroll snap */
   .hero-section {
     height: 100vh;

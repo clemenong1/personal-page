@@ -21,16 +21,22 @@ const Hero: React.FC = () => {
   ];
 
   return (
-    <section id="home" className="h-full flex items-center justify-center pt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          {/* Profile Image Placeholder */}
-          <div className="mb-8">
-            <div className="w-32 h-32 mx-auto bg-dark-card rounded-full flex items-center justify-center border-4 border-accent-blue">
-              <span className="text-4xl font-bold text-white">CO</span>
-            </div>
-          </div>
-
+    <section id="home" className="h-full flex items-center justify-end pt-16 relative">
+      {/* Background Image with Fade Effect */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute left-0 top-0 w-1/2 h-full">
+          <img 
+            src="/images/profile-bg.jpg" 
+            alt="Profile Background" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-image-fade"></div>
+          <div className="absolute bottom-0 left-0 w-full h-32 bg-image-fade-bottom"></div>
+        </div>
+      </div>
+      
+      <div className="max-w-4xl px-4 sm:px-6 lg:px-8 mr-8 lg:mr-16 relative z-10">
+        <div className="text-right">
           {/* Name and Title */}
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">
             Hi, I'm <span className="gradient-text">Clemen!</span>
@@ -40,12 +46,12 @@ const Hero: React.FC = () => {
           </h2>
 
           {/* Bio */}
-          <p className="text-lg md:text-xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed">
+          <p className="text-lg md:text-2xl text-gray-300 max-w-2xl ml-auto mb-12 leading-relaxed">
             I'm a passionate developer and NUS Computer Science undergraduate with interests in full-stack development, machine learning, and impactful tech for good.
           </p>
 
           {/* Social Links */}
-          <div className="flex justify-center space-x-4 mb-12">
+          <div className="flex justify-end space-x-4 mb-12">
             {socialLinks.map((social) => (
               <a
                 key={social.name}
@@ -61,7 +67,7 @@ const Hero: React.FC = () => {
           </div>
 
           {/* CTA Button */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-end">
             <a
               href="#contact"
               className="btn-primary inline-block"

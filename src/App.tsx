@@ -11,30 +11,33 @@ import NavigationArrows from './components/NavigationArrows';
 
 const App: React.FC = () => {
   return (
-    <div className="min-h-screen bg-dark-bg">
-      <Header />
-      <NavigationArrows />
-      <main>
-        <div className="hero-section">
-          <Hero />
-        </div>
-        <div className="professional-work-section">
-          <ProfessionalWork />
-        </div>
-        <div className="skills-section">
-          <Skills />
-        </div>
-        <div className="personal-projects-section">
-          <PersonalProjects />
-        </div>
-        <div className="education-section">
-          <Education />
-        </div>
-        <div className="contact-section">
-          <Contact />
-        </div>
-      </main>
-      <Footer />
+    <div className="min-h-screen bg-dark-bg relative">
+      {/* Content */}
+      <div className="relative z-10">
+        <Header />
+        <NavigationArrows />
+        <main>
+          <div className="hero-section">
+            <Hero />
+          </div>
+          <div className="professional-work-section">
+            <ProfessionalWork />
+          </div>
+          <div className="skills-section">
+            <Skills />
+          </div>
+          <div className="personal-projects-section">
+            <PersonalProjects />
+          </div>
+          <div className="education-section">
+            <Education />
+          </div>
+          <div className="contact-section">
+            <Contact />
+          </div>
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 };
