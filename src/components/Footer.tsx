@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaGithub, FaLinkedin, FaEnvelope, FaPhone } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 
 const Footer: React.FC = () => {
   const socialLinks = [
@@ -17,11 +17,6 @@ const Footer: React.FC = () => {
       name: 'Email',
       url: 'mailto:clemenongjunkai@gmail.com',
       icon: FaEnvelope
-    },
-    {
-      name: 'Phone',
-      url: 'tel:+6591282681',
-      icon: FaPhone
     }
   ];
 
@@ -55,4 +50,4 @@ const Footer: React.FC = () => {
   );
 };
 
-export default Footer; 
+export default Footer;

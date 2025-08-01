@@ -148,7 +148,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## �� Contact
 
 - **Email**: clemenongjunkai@gmail.com
-- **Phone**: (+65) 9128 2681
 - **LinkedIn**: [clemenong1](https://www.linkedin.com/in/clemenong1)
 - **GitHub**: [clemenong1](https://github.com/clemenong1)
 
