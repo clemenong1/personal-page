@@ -42,7 +42,7 @@ const Hero: React.FC = () => {
             Hi, I'm <span className="gradient-text">Clemen!</span>
           </h1>
           <h2 className="text-2xl md:text-3xl text-gray-300 mb-8">
-            Welcome to my website!
+            Here is more about me!
           </h2>
 
           {/* Bio */}
