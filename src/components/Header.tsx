@@ -1,40 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { Link, useLocation } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const location = useLocation();
 
   const navItems = [
-    { name: 'Home', href: '#home', id: 'home' },
-    { name: 'Professional Work', href: '#professional-work', id: 'professional-work' },
-    { name: 'Skills', href: '#skills', id: 'skills' },
-    { name: 'Personal Projects', href: '#personal-projects', id: 'personal-projects' },
-    { name: 'Education', href: '#education', id: 'education' },
-    { name: 'Contact', href: '#contact', id: 'contact' }
+    { name: 'Me!', path: '/', id: 'me' },
+    { name: 'My Work', path: '/my-work', id: 'my-work' },
+    { name: 'Contact', path: '/contact', id: 'contact' }
   ];
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = document.querySelectorAll('.hero-section, .professional-work-section, .scroll-snap-section');
-      const scrollPosition = window.scrollY + window.innerHeight / 3;
-      
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i] as HTMLElement;
-        if (section.offsetTop <= scrollPosition) {
-          // Find the corresponding nav item
-          const sectionId = section.querySelector('section')?.id || '';
-          if (sectionId && sectionId !== activeSection) {
-            setActiveSection(sectionId);
-          }
-          break;
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [activeSection]);
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -50,26 +30,26 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href="#home" className="text-xl font-bold text-white hover:text-accent-blue transition-colors">
+            <Link to="/" className="text-xl font-bold text-white hover:text-accent-blue transition-colors">
               Clemen Ong
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.name}
-                href={item.href}
+                to={item.path}
                 className={`transition-colors duration-200 font-medium ${
-                  activeSection === item.id 
+                  isActive(item.path) 
                     ? 'text-accent-blue' 
                     : 'text-gray-300 hover:text-white'
                 }`}
                 onClick={closeMenu}
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -90,18 +70,18 @@ const Header: React.FC = () => {
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-dark-card rounded-lg mt-2 mb-4">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.name}
-                  href={item.href}
+                  to={item.path}
                   className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
-                    activeSection === item.id 
+                    isActive(item.path) 
                       ? 'text-accent-blue bg-dark-border' 
                       : 'text-gray-300 hover:text-white'
                   }`}
                   onClick={closeMenu}
                 >
                   {item.name}
-                </a>
+                </Link>
               ))}
             </div>
           </div>

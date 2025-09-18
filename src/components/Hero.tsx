@@ -1,5 +1,7 @@
 import React from 'react';
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import SplitText from "./BounceEffect.tsx";
 
 const Hero: React.FC = () => {
   const socialLinks = [
@@ -21,7 +23,7 @@ const Hero: React.FC = () => {
   ];
 
   return (
-    <section id="home" className="h-full flex items-center justify-end pt-16 relative">
+    <section id="home" className="h-screen flex items-center justify-end pt-16 relative">
       {/* Background Image with Fade Effect */}
       <div className="absolute inset-0 z-0">
         <div className="absolute left-0 top-0 w-1/2 h-full">
@@ -35,23 +37,44 @@ const Hero: React.FC = () => {
         </div>
       </div>
       
+      {/* Content */}
       <div className="max-w-4xl px-4 sm:px-6 lg:px-8 mr-8 lg:mr-16 relative z-10">
-        <div className="text-right">
+        <div className="text-right space-y-6">
           {/* Name and Title */}
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">
-            Hi, I'm <span className="gradient-text">Clemen!</span>
-          </h1>
-          <h2 className="text-2xl md:text-3xl text-gray-300 mb-8">
-            Here is more about me!
-          </h2>
+          <div>
+            <SplitText
+              text="Hi, I'm&nbsp;"
+              className="text-6xl font-semibold text-white"
+              delay={100}
+              duration={0.6}
+              ease="power3.out"
+              splitType="chars"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              onLetterAnimationComplete={() => {}}
+            />
+            <SplitText
+              text=" Clemen!"
+              className="text-6xl font-semibold gradient-text"
+              delay={100}
+              duration={0.6}
+              ease="power3.out"
+              splitType="chars"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              onLetterAnimationComplete={() => {}}
+            />
+          </div>
 
-          {/* Bio */}
-          <p className="text-lg md:text-2xl text-gray-300 max-w-2xl ml-auto mb-12 leading-relaxed">
-            I'm a passionate developer and NUS Computer Science undergraduate with interests in full-stack development, machine learning, and impactful tech for good.
-          </p>
+          {/* Intro Bullets */}
+          <div className="text-gray-300 text-lg md:text-xl space-y-2 leading-relaxed">
+            <p>➤ Software Engineer</p>
+            <p>➤ Passionate about AI & Fintech</p>
+            <p>➤ Love building impactful tech</p>
+          </div>
 
           {/* Social Links */}
-          <div className="flex justify-end space-x-4 mb-12">
+          <div className="flex justify-end space-x-4 pt-4">
             {socialLinks.map((social) => (
               <a
                 key={social.name}
@@ -66,20 +89,14 @@ const Hero: React.FC = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-end">
-            <a
-              href="#contact"
-              className="btn-primary inline-block"
-            >
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-end pt-6">
+            <Link to="/contact" className="btn-primary inline-block">
               Get In Touch
-            </a>
-            <a
-              href="#professional-work"
-              className="btn-secondary inline-block"
-            >
+            </Link>
+            <Link to="/my-work" className="btn-secondary inline-block">
               View My Work
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -87,4 +104,4 @@ const Hero: React.FC = () => {
   );
 };
 
-export default Hero; 
+export default Hero;

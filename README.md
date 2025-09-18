@@ -1,4 +1,4 @@
-# Clemen Ong Jun Kai - Portfolio Website
+# Clemen Ong
 
 A modern, dark-themed portfolio website built with React, TypeScript, and Tailwind CSS. This website showcases Clemen's professional work, skills, and personal projects.
 

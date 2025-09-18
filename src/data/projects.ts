@@ -16,7 +16,7 @@ export const professionalProjects: Project[] = [
     title: 'SingaSport: Sports Facility App',
     date: 'May 2025 - Present',
     description: 'Co-developed a mobile app to optimize usage of over 370 free public sports facilities in Singapore integrating geolocation and geofencing to monitor facility occupancy in real-time. Built using React Native and Firebase.',
-    tech: ['React Native', 'Firebase', 'Geolocation', 'Geofencing'],
+    tech: ['React Native', 'Firebase', 'Geolocation', 'Geofencing', 'Google Maps API', 'OpenAI'],
     image: '/images/singasport-app.jpg',
     githubUrl: 'https://github.com/clemenong1/SingaSport',
     category: 'professional'

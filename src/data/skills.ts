@@ -14,14 +14,14 @@ export const skills: SkillCategory[] = [
   },
   {
     name: 'Backend Technologies',
-    skills: ['Firebase', 'Express.js', 'Node.js', 'MongoDB']
+    skills: ['SQL', 'Firebase', 'Next.js']
   },
   {
     name: 'AI & Data Science',
-    skills: ['Machine Learning', 'TensorFlow', 'Scikit-Learn', 'Data Analysis']
+    skills: ['Machine Learning', 'TensorFlow', 'Scikit-Learn', 'numPy', 'pandasAi', 'Data Analysis']
   },
   {
     name: 'Tools & Others',
-    skills: ['MATLAB', 'Microsoft Excel', 'RStudio', 'Git', 'Docker']
+    skills: ['MATLAB', 'Microsoft Excel', 'RStudio', 'Git']
   }
 ]; 
