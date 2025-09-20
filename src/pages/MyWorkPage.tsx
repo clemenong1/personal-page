@@ -68,22 +68,24 @@ const MyWorkPage: React.FC = () => {
           </div>
 
           {/* Projects Section */}
-          <div className="mb-20 pointer-events-auto">
+          <div className="mb-20">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {allProjects.map((project) => (
-                <ProjectCard key={project.id} project={project} />
+                <div key={project.id} className="pointer-events-auto">
+                  <ProjectCard project={project} />
+                </div>
               ))}
             </div>
           </div>
 
           {/* Skills Section */}
-          <div className="pointer-events-auto">
-            <h2 className="text-3xl font-bold text-white mb-8 text-center">
+          <div>
+            <h2 className="text-3xl font-bold text-white mb-8 text-center pointer-events-auto">
               Skills & Technologies
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
               {skills.map((category) => (
-                <div key={category.name} className="card">
+                <div key={category.name} className="card pointer-events-auto">
                   <h3 className="text-xl font-bold text-white mb-4">{category.name}</h3>
                   <div className="flex flex-wrap gap-2">
                     {category.skills.map((skill) => (
@@ -94,7 +96,7 @@ const MyWorkPage: React.FC = () => {
               ))}
             </div>
 
-            <div className="relative overflow-hidden h-[200px]">
+            <div className="relative overflow-hidden h-[200px] pointer-events-auto">
               <LogoLoop
                 logos={techLogos}
                 speed={120}
