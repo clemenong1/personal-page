@@ -1,7 +1,17 @@
+/* Fixed viewport container - CRITICAL for stacking effect */
+.scroll-stack-viewport {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  background: #1a1a1a;
+}
+
 .scroll-stack-scroller {
-  position: relative;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
@@ -16,13 +26,13 @@
 }
 
 .scroll-stack-inner {
-  padding: 10vh 1rem 100vh;
-  min-height: 200vh;
+  padding: 100vh 2rem 200vh;
+  min-height: 300vh;
 }
 
 @media (min-width: 640px) {
   .scroll-stack-inner {
-    padding: 10vh 2rem 100vh;
+    padding: 100vh 2rem 200vh;
   }
   
   .scroll-stack-card {
@@ -36,36 +46,57 @@
 }
 
 .scroll-stack-card {
-  transform-origin: top center;
+  position: relative;
+  width: 90%;
+  max-width: 1200px;
+  height: 80vh;
+  margin: 0 auto 100px;
+  border-radius: 24px;
+  overflow: hidden;
+  
+  /* CRITICAL: Hardware acceleration for smooth stacking */
   will-change: transform, filter;
+  transform: translateZ(0);
   backface-visibility: hidden;
   transform-style: preserve-3d;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  height: 80vh;
-  min-height: 500px;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  border-radius: 16px;
-  box-sizing: border-box;
+  transform-origin: top center;
+  
+  /* Remove any transitions that interfere */
+  transition: none !important;
+  
   /* Performance optimizations */
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
   contain: layout style paint;
   isolation: isolate;
-  /* Remove transitions that cause jitter */
-  transition: none;
-  /* Optimize text rendering */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeSpeed;
+  
+  /* Visual styling */
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .scroll-stack-end {
   width: 100%;
   height: 1px;
+}
+
+/* Portfolio container and sections */
+.portfolio-container {
+  position: relative;
+  background: #1a1a1a;
+  min-height: 100vh;
+}
+
+.header-section {
+  position: relative;
+  z-index: 5;
+  background: #1a1a1a;
+}
+
+.skills-section {
+  position: relative;
+  z-index: 5;
+  background: #1a1a1a;
+  padding: 4rem 0;
 }

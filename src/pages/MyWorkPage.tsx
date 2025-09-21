@@ -1,5 +1,4 @@
 import React from 'react';
-import PageLayout from '../components/PageLayout';
 import PageContent from '../components/PageContent';
 import SkillBadge from '../components/SkillBadge';
 import LogoLoop from '../components/LogoLoop';
@@ -36,10 +35,9 @@ const allProjects = [...professionalProjects, ...personalProjects];
 
 const MyWorkPage: React.FC = () => {
   return (
-    <PageLayout className="relative bg-dark-bg overflow-hidden">
-      {/* Foreground Content */}
-      <div className="relative z-10 flex-1">
-        {/* Header */}
+    <div className="portfolio-container">
+      {/* Header Section - Outside of ScrollStack */}
+      <div className="header-section">
         <div className="text-center py-20">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
             My Work
@@ -48,63 +46,63 @@ const MyWorkPage: React.FC = () => {
             These selected projects reflect my passion for blending strategy with creativity — solving real problems through thoughtful design and impactful storytelling.
           </p>
         </div>
-
-        {/* ScrollStack Projects Section */}
-        <div>
-          <ScrollStack
-            useWindowScroll={true}
-            itemDistance={100}
-            itemScale={0.03}
-            itemStackDistance={30}
-            stackPosition="20%"
-            scaleEndPosition="10%"
-            baseScale={0.85}
-            rotationAmount={0}
-            blurAmount={0}
-          >
-            {allProjects.map((project) => (
-              <ScrollStackItem key={project.id}>
-                <ScrollStackProjectCard project={project} />
-              </ScrollStackItem>
-            ))}
-          </ScrollStack>
-        </div>
-
-        {/* Skills Section */}
-        <div className="py-20">
-          <PageContent>
-            <h2 className="text-3xl font-bold text-white mb-8 text-center">
-              Skills & Technologies
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-              {skills.map((category) => (
-                <div key={category.name} className="card">
-                  <h3 className="text-xl font-bold text-white mb-4">{category.name}</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {category.skills.map((skill) => (
-                      <SkillBadge key={skill} skill={skill} />
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="relative overflow-hidden h-[200px]">
-              <LogoLoop
-                logos={techLogos}
-                speed={120}
-                direction="left"
-                logoHeight={48}
-                gap={40}
-                pauseOnHover
-                scaleOnHover
-                ariaLabel="Technology partners"
-              />
-            </div>
-          </PageContent>
-        </div>
       </div>
-    </PageLayout>
+
+      {/* Fixed Viewport for ScrollStack */}
+      <div className="scroll-stack-viewport">
+        <ScrollStack
+          useWindowScroll={false}
+          itemDistance={150}
+          itemScale={0.05}
+          itemStackDistance={40}
+          stackPosition="30%"
+          scaleEndPosition="10%"
+          baseScale={0.9}
+          rotationAmount={0}
+          blurAmount={0}
+        >
+          {allProjects.map((project) => (
+            <ScrollStackItem key={project.id}>
+              <ScrollStackProjectCard project={project} />
+            </ScrollStackItem>
+          ))}
+        </ScrollStack>
+      </div>
+
+      {/* Skills Section - After ScrollStack */}
+      <div className="skills-section">
+        <PageContent>
+          <h2 className="text-3xl font-bold text-white mb-8 text-center">
+            Skills & Technologies
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {skills.map((category) => (
+              <div key={category.name} className="card">
+                <h3 className="text-xl font-bold text-white mb-4">{category.name}</h3>
+                <div className="flex flex-wrap gap-2">
+                  {category.skills.map((skill) => (
+                    <SkillBadge key={skill} skill={skill} />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="relative overflow-hidden h-[200px]">
+            <LogoLoop
+              logos={techLogos}
+              speed={120}
+              direction="left"
+              logoHeight={48}
+              gap={40}
+              pauseOnHover
+              scaleOnHover
+              ariaLabel="Technology partners"
+            />
+          </div>
+        </PageContent>
+      </div>
+    </div>
   );
 };
 
