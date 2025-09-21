@@ -1,7 +1,7 @@
 import React from 'react';
 import PageLayout from '../components/PageLayout';
 import PageContent from '../components/PageContent';
-import ProjectCard from '../components/ProjectCard';
+import ProjectStack from '../components/ProjectStack';
 import SkillBadge from '../components/SkillBadge';
 import LogoLoop from '../components/LogoLoop';
 import { professionalProjects, personalProjects } from '../data/projects';
@@ -69,12 +69,8 @@ const MyWorkPage: React.FC = () => {
 
           {/* Projects Section */}
           <div className="mb-20">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {allProjects.map((project) => (
-                <div key={project.id} className="pointer-events-auto">
-                  <ProjectCard project={project} />
-                </div>
-              ))}
+            <div className="pointer-events-auto">
+              <ProjectStack projects={allProjects} />
             </div>
           </div>
 
