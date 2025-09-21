@@ -53,12 +53,12 @@ const MyWorkPage: React.FC = () => {
         <div>
           <ScrollStack
             useWindowScroll={true}
-            itemDistance={0}
-            itemScale={0.01}
-            itemStackDistance={15}
+            itemDistance={100}
+            itemScale={0.03}
+            itemStackDistance={30}
             stackPosition="20%"
             scaleEndPosition="10%"
-            baseScale={0.95}
+            baseScale={0.85}
             rotationAmount={0}
             blurAmount={0}
           >

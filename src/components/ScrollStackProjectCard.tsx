@@ -51,7 +51,9 @@ const ScrollStackProjectCard: React.FC<ScrollStackProjectCardProps> = ({ project
         willChange: 'transform',
         backfaceVisibility: 'hidden',
         transform: 'translateZ(0)',
-        contain: 'layout style paint'
+        contain: 'layout style paint',
+        isolation: 'isolate',
+        transition: 'none'
       }}
     >
       {/* Background Pattern Overlay */}

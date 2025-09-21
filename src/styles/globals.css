@@ -4,7 +4,7 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
   }
   
   body {
@@ -12,6 +12,17 @@
     background-color: #1a1a1a;
     color: #ffffff;
     line-height: 1.6;
+  }
+  
+  /* Performance optimizations */
+  * {
+    box-sizing: border-box;
+  }
+  
+  /* Optimize scroll performance */
+  html, body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
   :root {
     --background: 0 0% 100%;
