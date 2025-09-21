@@ -10,8 +10,6 @@ import { professionalProjects, personalProjects } from '../data/projects';
 import { skills } from '../data/skills';
 import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiPython, SiJavascript, SiFigma, SiStreamlit, SiHtml5, SiCss3, SiMysql, SiFirebase, SiTensorflow, SiNumpy, SiPandas, SiGithub} from 'react-icons/si';
 import { SiOpenjdk } from 'react-icons/si';
-// @ts-ignore
-import LiquidEther from '../components/LiquidEther';
 
 const techLogos = [
   { node: <SiReact className="w-16 h-16 text-blue-500" />, title: "React", href: "https://react.dev" },
@@ -39,31 +37,10 @@ const allProjects = [...professionalProjects, ...personalProjects];
 const MyWorkPage: React.FC = () => {
   return (
     <PageLayout className="relative bg-dark-bg overflow-hidden">
-      {/* Background Liquid Ether */}
-      <div className="absolute inset-0 z-0">
-        <LiquidEther
-          colors={['#5227FF', '#FF9FFC', '#B19EEF']}
-          mouseForce={20}
-          cursorSize={100}
-          isViscous={false}
-          viscous={30}
-          iterationsViscous={32}
-          iterationsPoisson={32}
-          resolution={0.5}
-          isBounce={false}
-          autoDemo={true}
-          autoSpeed={0.5}
-          autoIntensity={2.2}
-          takeoverDuration={0.25}
-          autoResumeDelay={3000}
-          autoRampDuration={0.6}
-        />
-      </div>
-
       {/* Foreground Content */}
-      <div className="relative z-10 flex-1 pointer-events-none">
+      <div className="relative z-10 flex-1">
         {/* Header */}
-        <div className="text-center py-20 pointer-events-auto">
+        <div className="text-center py-20">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
             My Work
           </h1>
@@ -73,15 +50,15 @@ const MyWorkPage: React.FC = () => {
         </div>
 
         {/* ScrollStack Projects Section */}
-        <div className="pointer-events-auto">
+        <div>
           <ScrollStack
             useWindowScroll={true}
             itemDistance={0}
-            itemScale={0.02}
-            itemStackDistance={20}
-            stackPosition="15%"
-            scaleEndPosition="5%"
-            baseScale={0.9}
+            itemScale={0.01}
+            itemStackDistance={15}
+            stackPosition="20%"
+            scaleEndPosition="10%"
+            baseScale={0.95}
             rotationAmount={0}
             blurAmount={0}
           >
@@ -94,7 +71,7 @@ const MyWorkPage: React.FC = () => {
         </div>
 
         {/* Skills Section */}
-        <div className="py-20 pointer-events-auto">
+        <div className="py-20">
           <PageContent>
             <h2 className="text-3xl font-bold text-white mb-8 text-center">
               Skills & Technologies

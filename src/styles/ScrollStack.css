@@ -10,6 +10,9 @@
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   will-change: scroll-position;
+  /* Performance optimizations */
+  contain: layout style paint;
+  isolation: isolate;
 }
 
 .scroll-stack-inner {
@@ -34,7 +37,7 @@
 
 .scroll-stack-card {
   transform-origin: top center;
-  will-change: transform, filter;
+  will-change: transform;
   backface-visibility: hidden;
   transform-style: preserve-3d;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
@@ -45,13 +48,15 @@
   padding: 0;
   border-radius: 16px;
   box-sizing: border-box;
-  /* Improve mobile performance */
+  /* Performance optimizations */
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   position: relative;
   overflow: hidden;
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  contain: layout style paint;
+  isolation: isolate;
 }
 
 .scroll-stack-end {

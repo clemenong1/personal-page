@@ -46,7 +46,13 @@ const ScrollStackProjectCard: React.FC<ScrollStackProjectCardProps> = ({ project
   return (
     <div 
       className="w-full h-full relative overflow-hidden rounded-2xl sm:rounded-3xl"
-      style={backgroundStyle}
+      style={{
+        ...backgroundStyle,
+        willChange: 'transform',
+        backfaceVisibility: 'hidden',
+        transform: 'translateZ(0)',
+        contain: 'layout style paint'
+      }}
     >
       {/* Background Pattern Overlay */}
       <div className="absolute inset-0 bg-black/20" />
