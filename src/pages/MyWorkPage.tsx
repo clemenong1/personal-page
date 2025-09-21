@@ -4,8 +4,6 @@ import PageContent from '../components/PageContent';
 import ProjectCard from '../components/ProjectCard';
 import SkillBadge from '../components/SkillBadge';
 import LogoLoop from '../components/LogoLoop';
-// @ts-ignore
-import ScrollStack, { ScrollStackItem } from '../components/ScrollStack';
 import { professionalProjects, personalProjects } from '../data/projects';
 import { skills } from '../data/skills';
 import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiPython, SiJavascript, SiFigma, SiStreamlit, SiHtml5, SiCss3, SiMysql, SiFirebase, SiTensorflow, SiNumpy, SiPandas, SiGithub} from 'react-icons/si';
@@ -71,22 +69,13 @@ const MyWorkPage: React.FC = () => {
 
           {/* Projects Section */}
           <div className="mb-20">
-            <ScrollStack 
-              className="h-screen"
-              itemDistance={150}
-              itemScale={0.05}
-              itemStackDistance={40}
-              stackPosition="30%"
-              scaleEndPosition="15%"
-              baseScale={0.9}
-              useWindowScroll={true}
-            >
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {allProjects.map((project) => (
-                <ScrollStackItem key={project.id} itemClassName="pointer-events-auto">
+                <div key={project.id} className="pointer-events-auto">
                   <ProjectCard project={project} />
-                </ScrollStackItem>
+                </div>
               ))}
-            </ScrollStack>
+            </div>
           </div>
 
           {/* Skills Section */}
