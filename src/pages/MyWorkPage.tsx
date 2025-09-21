@@ -1,9 +1,11 @@
 import React from 'react';
 import PageLayout from '../components/PageLayout';
 import PageContent from '../components/PageContent';
-import ProjectCard from '../components/ProjectCard';
 import SkillBadge from '../components/SkillBadge';
 import LogoLoop from '../components/LogoLoop';
+// @ts-ignore
+import ScrollStack, { ScrollStackItem } from '../components/ScrollStack';
+import ScrollStackProjectCard from '../components/ScrollStackProjectCard';
 import { professionalProjects, personalProjects } from '../data/projects';
 import { skills } from '../data/skills';
 import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiPython, SiJavascript, SiFigma, SiStreamlit, SiHtml5, SiCss3, SiMysql, SiFirebase, SiTensorflow, SiNumpy, SiPandas, SiGithub} from 'react-icons/si';
@@ -59,33 +61,47 @@ const MyWorkPage: React.FC = () => {
       </div>
 
       {/* Foreground Content */}
-      <div className="relative z-10 flex-1 py-20 pointer-events-none">
-        <PageContent>
-          <div className="text-center mb-16 pointer-events-auto">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              My Work
-            </h1>
-          </div>
+      <div className="relative z-10 flex-1 pointer-events-none">
+        {/* Header */}
+        <div className="text-center py-20 pointer-events-auto">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            My Work
+          </h1>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            These selected projects reflect my passion for blending strategy with creativity — solving real problems through thoughtful design and impactful storytelling.
+          </p>
+        </div>
 
-          {/* Projects Section */}
-          <div className="mb-20">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {allProjects.map((project) => (
-                <div key={project.id} className="pointer-events-auto">
-                  <ProjectCard project={project} />
-                </div>
-              ))}
-            </div>
-          </div>
+        {/* ScrollStack Projects Section */}
+        <div className="pointer-events-auto">
+          <ScrollStack
+            useWindowScroll={true}
+            itemDistance={0}
+            itemScale={0.02}
+            itemStackDistance={20}
+            stackPosition="15%"
+            scaleEndPosition="5%"
+            baseScale={0.9}
+            rotationAmount={0}
+            blurAmount={0}
+          >
+            {allProjects.map((project) => (
+              <ScrollStackItem key={project.id}>
+                <ScrollStackProjectCard project={project} />
+              </ScrollStackItem>
+            ))}
+          </ScrollStack>
+        </div>
 
-          {/* Skills Section */}
-          <div>
-            <h2 className="text-3xl font-bold text-white mb-8 text-center pointer-events-auto">
+        {/* Skills Section */}
+        <div className="py-20 pointer-events-auto">
+          <PageContent>
+            <h2 className="text-3xl font-bold text-white mb-8 text-center">
               Skills & Technologies
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
               {skills.map((category) => (
-                <div key={category.name} className="card pointer-events-auto">
+                <div key={category.name} className="card">
                   <h3 className="text-xl font-bold text-white mb-4">{category.name}</h3>
                   <div className="flex flex-wrap gap-2">
                     {category.skills.map((skill) => (
@@ -96,7 +112,7 @@ const MyWorkPage: React.FC = () => {
               ))}
             </div>
 
-            <div className="relative overflow-hidden h-[200px] pointer-events-auto">
+            <div className="relative overflow-hidden h-[200px]">
               <LogoLoop
                 logos={techLogos}
                 speed={120}
@@ -108,8 +124,8 @@ const MyWorkPage: React.FC = () => {
                 ariaLabel="Technology partners"
               />
             </div>
-          </div>
-        </PageContent>
+          </PageContent>
+        </div>
       </div>
     </PageLayout>
   );
