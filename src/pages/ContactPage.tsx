@@ -9,15 +9,15 @@ const ContactPage: React.FC = () => {
     <ScrollAnimations>
       <PageLayout className="relative bg-dark-bg overflow-hidden">
         {/* Foreground Content */}
-        <div className="relative z-10 flex-1 flex items-center justify-center py-20">
+        <div className="relative z-10 flex-1 flex items-center justify-center py-12">
           <PageContent maxWidth="4xl">
-            <div className="text-center mb-16">
+            <div className="text-center mb-10">
               <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 scroll-animate">
                 Let's connect!
               </h1>
             </div>
 
-            <div className="max-w-4xl mx-auto mb-16 scroll-animate">
+            <div className="max-w-4xl mx-auto mb-10 scroll-animate">
               <ContactForm />
             </div>
 

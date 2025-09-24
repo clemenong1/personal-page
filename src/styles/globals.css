@@ -5,25 +5,48 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: #1a1a1a;
-    overflow-x: hidden;
+    background-color: #0f0f10;
+    color-scheme: dark;
+    overflow: hidden;
+    height: 100%;
+    overscroll-behavior: none;
   }
-  
+
   body {
     font-family: 'Inter', sans-serif;
-    background-color: #1a1a1a;
+    background-color: #0f0f10;
     color: #ffffff;
     line-height: 1.6;
     margin: 0;
     padding: 0;
+    height: 100%;
+    overflow-y: auto;
     overflow-x: hidden;
+    overscroll-behavior: none;
+    position: relative;
   }
-  
+
+  /* Ensure React mount and main containers inherit dark background and full height */
+  #root, main, .snap-container {
+    background-color: #0f0f10;
+    min-height: 100%;
+  }
+
+  /* Persistent dark backdrop to avoid white flash on overscroll */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: #0f0f10;
+    z-index: -1;
+    pointer-events: none;
+  }
+
   /* Performance optimizations */
   * {
     box-sizing: border-box;
   }
-  
+
   /* Optimize scroll performance */
   html, body {
     -webkit-overflow-scrolling: touch;
@@ -88,28 +111,28 @@
   .card {
     @apply bg-dark-card rounded-lg p-6 transition-all duration-300 hover:shadow-lg hover:shadow-black/20;
   }
-  
+
   .btn-primary {
     @apply bg-white text-black px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:bg-gray-100 transform hover:scale-105;
   }
-  
+
   .btn-secondary {
     @apply bg-dark-card border border-dark-border text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-dark-border;
   }
-  
+
   .social-icon {
     @apply w-10 h-10 bg-dark-card border border-dark-border rounded-lg flex items-center justify-center text-white transition-all duration-300 hover:bg-dark-border hover:scale-110;
   }
-  
+
   .section-title {
     @apply text-3xl md:text-4xl font-bold text-white mb-8;
   }
-  
+
   .split-parent.gradient-text .split-char,
   .split-parent.gradient-text .split-word,
   .split-parent.gradient-text .split-line {
     @apply bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent;
-  } 
+  }
 
   /* Background image fade effect */
   .bg-image-fade {
@@ -155,27 +178,31 @@
   .snap-section {
     min-height: 100vh;
     scroll-snap-align: start;
-    padding-top: 24px; /* reduced space for island nav */
-  }
-  .snap-section:first-of-type {
-    padding-top: 0; /* no spacer on first section */
+    padding-top: 24px; /* Default padding for sections to clear floating nav */
+    scroll-margin-top: 88px; /* Ensure header sits below fixed nav on anchor scroll */
   }
 
-  .hero-section {
-    height: 100vh;
+  /* First section should not have top padding as it starts at the top */
+  .snap-container > section:first-child {
+    padding-top: 0;
+    scroll-margin-top: 0; /* No offset for the first (home) section */
   }
 
-  .professional-work-section {
-    min-height: 100vh;
+  /* Make Skills section content-height instead of full viewport to avoid huge gap */
+  .snap-container > section#skills {
+    min-height: auto;
+    padding-top: 24px;
+    padding-bottom: 24px;
   }
 
-  /* Skills and Education wrappers */
   .skills-section {
-    background-color: #1a1a1a; /* match global background */
+    /* Removed specific background-color to inherit from body/html */
+    /* min-height: 100vh; */ /* Removed to reduce space */
   }
 
   .education-section {
-    background-color: #1a1a1a;
+    background-color: #1a1a1a; /* Ensure consistent dark background */
+    min-height: 100vh;
   }
 }
 

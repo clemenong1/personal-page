@@ -34,7 +34,7 @@ const techLogos = [
 const sections = [
   { id: 'home', label: 'Me!' },
   { id: 'my-work', label: 'My Work' },
-  { id: 'skills', label: 'Skills' },
+  { id: 'skills', label: 'My Skills' },
   { id: 'contact', label: 'Contact' }
 ];
 
@@ -83,6 +83,8 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-dark-bg relative">
+      {/* Fixed dark backdrop to avoid white flash on overscroll */}
+      <div className="fixed inset-0 -z-10 bg-[#1a1a1a]"></div>
       {/* Floating rounded navigation (island) */}
       <div className="fixed left-1/2 -translate-x-1/2 top-4 md:top-6 z-40">
         <nav className="flex items-center gap-2 bg-black/40 backdrop-blur-md border border-dark-border rounded-full px-3 py-2 shadow-lg shadow-black/30">
@@ -113,7 +115,7 @@ const App: React.FC = () => {
             <div className="skills-section">
               <PageContent>
                 <h2 className="text-3xl font-bold text-white mb-8 text-center scroll-animate">Skills & Technologies</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-6">
                   {skills.map((category, index) => (
                     <div 
                       key={category.name} 
@@ -129,7 +131,7 @@ const App: React.FC = () => {
                   ))}
                 </div>
 
-                <div className="relative overflow-hidden h-[200px] scroll-animate">
+                <div className="relative overflow-hidden h-[160px] scroll-animate">
                   <LogoLoop
                     logos={techLogos}
                     speed={120}
