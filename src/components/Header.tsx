@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import { Link, useLocation } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const location = useLocation();
 
   const navItems = [
-    { name: 'Me!', path: '/', id: 'me' },
-    { name: 'My Work', path: '/my-work', id: 'my-work' },
-    { name: 'Contact', path: '/contact', id: 'contact' }
+    { name: 'Me!', id: 'home' },
+    { name: 'My Work', id: 'my-work' },
+    { name: 'Contact', id: 'contact' }
   ];
 
-  const isActive = (path: string) => {
-    return location.pathname === path;
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   const toggleMenu = () => {
@@ -30,26 +30,27 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link to="/" className="text-xl font-bold text-white hover:text-accent-blue transition-colors">
+            <button 
+              onClick={() => scrollTo('home')} 
+              className="text-xl font-bold text-white hover:text-accent-blue transition-colors"
+            >
               Clemen Ong
-            </Link>
+            </button>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
             {navItems.map((item) => (
-              <Link
+              <button
                 key={item.name}
-                to={item.path}
-                className={`transition-colors duration-200 font-medium ${
-                  isActive(item.path) 
-                    ? 'text-accent-blue' 
-                    : 'text-gray-300 hover:text-white'
-                }`}
-                onClick={closeMenu}
+                onClick={() => {
+                  scrollTo(item.id);
+                  closeMenu();
+                }}
+                className="transition-colors duration-200 font-medium text-gray-300 hover:text-white"
               >
                 {item.name}
-              </Link>
+              </button>
             ))}
           </nav>
 
@@ -70,18 +71,16 @@ const Header: React.FC = () => {
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-dark-card rounded-lg mt-2 mb-4">
               {navItems.map((item) => (
-                <Link
+                <button
                   key={item.name}
-                  to={item.path}
-                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
-                    isActive(item.path) 
-                      ? 'text-accent-blue bg-dark-border' 
-                      : 'text-gray-300 hover:text-white'
-                  }`}
-                  onClick={closeMenu}
+                  onClick={() => {
+                    scrollTo(item.id);
+                    closeMenu();
+                  }}
+                  className="block px-3 py-2 rounded-md text-base font-medium transition-colors text-gray-300 hover:text-white w-full text-left"
                 >
                   {item.name}
-                </Link>
+                </button>
               ))}
             </div>
           </div>

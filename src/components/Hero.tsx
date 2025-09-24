@@ -1,6 +1,5 @@
 import React from 'react';
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 import SplitText from "./BounceEffect.tsx";
 
 const Hero: React.FC = () => {
@@ -22,8 +21,14 @@ const Hero: React.FC = () => {
     }
   ];
 
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   return (
-    <section id="home" className="h-screen flex items-center justify-end pt-16 relative">
+    <section id="home" className="h-screen flex items-center justify-end relative">
       {/* Background Image with Fade Effect */}
       <div className="absolute inset-0 z-0">
         <div className="absolute left-0 top-0 w-1/2 h-full">
@@ -33,6 +38,7 @@ const Hero: React.FC = () => {
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-image-fade"></div>
+          <div className="absolute top-0 left-0 w-full h-48 bg-image-fade-top"></div>
           <div className="absolute bottom-0 left-0 w-full h-32 bg-image-fade-bottom"></div>
         </div>
       </div>
@@ -81,7 +87,7 @@ const Hero: React.FC = () => {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="social-icon"
+                className="social-icon hover-scale"
                 aria-label={social.name}
               >
                 <social.icon size={20} />
@@ -91,12 +97,18 @@ const Hero: React.FC = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-end pt-6">
-            <Link to="/contact" className="btn-primary inline-block">
+            <button 
+              onClick={() => scrollTo('contact')} 
+              className="btn-primary inline-block hover-scale"
+            >
               Get In Touch
-            </Link>
-            <Link to="/my-work" className="btn-secondary inline-block">
+            </button>
+            <button 
+              onClick={() => scrollTo('my-work')} 
+              className="btn-secondary inline-block hover-scale"
+            >
               View My Work
-            </Link>
+            </button>
           </div>
         </div>
       </div>

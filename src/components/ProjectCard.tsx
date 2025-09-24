@@ -8,14 +8,14 @@ interface ProjectCardProps {
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   return (
-    <div className="card group h-full flex flex-col">
+    <div className="card group h-full flex flex-col hover-lift">
       {/* Project Image */}
       <div className="relative overflow-hidden rounded-lg mb-4 bg-dark-border">
         {project.image ? (
           <img
             src={project.image}
             alt={project.title}
-            className="w-full aspect-video object-cover"
+            className="w-full aspect-video object-cover transition-transform duration-300 group-hover:scale-105"
             onError={(e) => {
               // Fallback to placeholder if image fails to load
               const target = e.target as HTMLImageElement;
@@ -24,7 +24,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             }}
           />
         ) : null}
-        <div className={`aspect-video bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center ${project.image ? 'hidden' : ''}`}>
+        <div className={`aspect-video bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center transition-transform duration-300 group-hover:scale-105 ${project.image ? 'hidden' : ''}`}>
           <span className="text-2xl font-bold text-white opacity-60">
             {project.title.split(' ').map(word => word[0]).join('')}
           </span>
@@ -50,7 +50,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           {project.tech.map((tech) => (
             <span
               key={tech}
-              className="px-2 py-1 bg-dark-border text-xs text-gray-300 rounded-md"
+              className="px-2 py-1 bg-dark-border text-xs text-gray-300 rounded-md hover-scale transition-transform duration-200"
             >
               {tech}
             </span>
@@ -64,7 +64,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               href={project.demoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-secondary flex items-center gap-2 text-sm"
+              className="btn-secondary flex items-center gap-2 text-sm hover-scale"
             >
               Demo <FaExternalLinkAlt size={12} />
             </a>
@@ -74,7 +74,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-secondary flex items-center gap-2 text-sm"
+              className="btn-secondary flex items-center gap-2 text-sm hover-scale"
             >
               GitHub <FaGithub size={12} />
             </a>
