@@ -8,11 +8,11 @@ export default {
   theme: {
   	extend: {
   		colors: {
-  			'dark-bg': '#1a1a1a',
-  			'dark-card': '#2a2a2a',
-  			'dark-border': '#3a3a3a',
-  			'accent-blue': '#3b82f6',
-  			'accent-blue-hover': '#2563eb',
+  			'dark-bg': '#070a1c',
+  			'dark-card': 'rgba(255, 255, 255, 0.06)',
+  			'dark-border': 'rgba(255, 255, 255, 0.14)',
+  			'accent-blue': '#3f7df0',
+  			'accent-blue-hover': '#6aa8ff',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
