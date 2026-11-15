@@ -3,7 +3,8 @@ import { ArrowRight } from 'lucide-react';
 import Experience from './scene/Experience';
 import type { View } from './scene/CameraRig';
 import LaptopOS from './os/LaptopOS';
-import { profile } from './data/profile';
+import { profile } from './data/content';
+import { SOCIAL_ICONS } from './os/routes';
 import { useQuality } from './hooks/useQuality';
 
 function hasWebGL() {
@@ -65,30 +66,36 @@ export default function App() {
       </div>
 
       <header className={`hero ${heroVisible ? 'is-visible' : ''}`} inert={heroVisible ? undefined : ''}>
-        <p className="hero__eyebrow">Portfolio · Singapore 1.35°N 103.82°E</p>
+        <p className="hero__eyebrow">
+          Portfolio · {profile.location} {profile.coordinates}
+        </p>
         <h1 className="hero__name">
-          Clemen
+          {profile.firstName}{' '}
           <br />
-          Ong
+          {profile.lastName}
         </h1>
         <p className="hero__tagline">{profile.tagline}</p>
+        <p className="hero__blurb">{profile.blurb}</p>
         <div className="hero__actions">
           <button type="button" className="hero__cta" onClick={enter}>
             Open my laptop <ArrowRight size={18} />
           </button>
           <div className="hero__socials">
-            {profile.socials.map((social) => (
-              <a
-                key={social.name}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={social.name}
-                className="hero__social"
-              >
-                <social.icon size={18} />
-              </a>
-            ))}
+            {profile.socials.map((social) => {
+              const Icon = SOCIAL_ICONS[social.kind];
+              return (
+                <a
+                  key={social.kind}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  className="hero__social"
+                >
+                  <Icon size={18} />
+                </a>
+              );
+            })}
           </div>
         </div>
       </header>

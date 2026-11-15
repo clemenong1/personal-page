@@ -1,9 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, X } from 'lucide-react';
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
+import { ArrowLeft } from 'lucide-react';
 import AvatarGuide from './AvatarGuide';
-import { APPS, AppContent } from './apps';
-import { intros } from '../data/intros';
-import type { AppId } from '../data/intros';
+import { BrowserTabs, BrowserView } from './Browser';
+import { activeTab, browserReducer, currentPath, initialBrowser } from './browserState';
+import MailApp from './Mail';
+import PreviewApp from './Preview';
+import Window from './Window';
+import { mascot, sections } from '../data/content';
+import type { AppId } from '../data/content';
+import { useMediaQuery } from '../hooks/useMediaQuery';
+import { APPS, PAGES, parsePath, pathTitle } from './routes';
+import { desktopReducer, focusedWindow, initialDesktop } from './windowManager';
 
 function useClock() {
   const [now, setNow] = useState(() => new Date());
@@ -14,6 +21,8 @@ function useClock() {
   return now;
 }
 
+const appById = (id: AppId) => APPS.find((app) => app.id === id)!;
+
 interface Props {
   /** True once the camera has arrived at the laptop screen. */
   active: boolean;
@@ -23,38 +32,98 @@ interface Props {
   onExit: () => void;
 }
 
-/** The laptop's desktop: a launcher, one app window at a time, a dock and the avatar guide. */
+/** The laptop's desktop: menu bar, desktop icons, app windows, dock and the avatar guide. */
 export default function LaptopOS({ active, canExit, reducedMotion, onExit }: Props) {
-  const [openApp, setOpenApp] = useState<AppId | null>(null);
+  const [desktop, dispatch] = useReducer(desktopReducer, initialDesktop);
+  const [browser, dispatchBrowser] = useReducer(browserReducer, initialBrowser);
+  const mobile = useMediaQuery('(max-width: 860px)');
+  // The mascot keeps its welcome line until the visitor opens or navigates something themselves.
+  const [toured, setToured] = useState(false);
+  const area = useRef<HTMLDivElement>(null);
   const now = useClock();
-  const windowBody = useRef<HTMLDivElement>(null);
-  const current = APPS.find((app) => app.id === openApp);
+  const front = focusedWindow(desktop);
+  const path = currentPath(activeTab(browser));
 
+  useEffect(() => {
+    const el = area.current;
+    if (!el) return;
+    const observer = new ResizeObserver(([entry]) =>
+      dispatch({ type: 'bounds', bounds: { w: entry.contentRect.width, h: entry.contentRect.height } }),
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // The first time the laptop opens, the browser is already showing the About page.
+  const measured = desktop.bounds.w > 0;
+  const launched = useRef(false);
+  useEffect(() => {
+    if (!active || !measured || launched.current) return;
+    launched.current = true;
+    dispatch({ type: 'open', id: 'browser' });
+  }, [active, measured]);
+
+  const openApp = useCallback((id: AppId) => {
+    setToured(true);
+    dispatch({ type: 'open', id, size: appById(id).size });
+  }, []);
+
+  const navigate = useCallback((to: string) => {
+    setToured(true);
+    dispatchBrowser({ type: 'navigate', path: to });
+  }, []);
+
+  const openTab = useCallback((to: string) => {
+    setToured(true);
+    dispatchBrowser({ type: 'openTab', path: to });
+  }, []);
+
+  const visit = (to: string) => {
+    dispatchBrowser({ type: 'visit', path: to });
+    openApp('browser');
+  };
+
+  const frontId = front?.id;
   useEffect(() => {
     if (!active) return;
     const onKey = (event: KeyboardEvent) => {
       if (event.key !== 'Escape') return;
-      if (openApp) setOpenApp(null);
+      if (frontId) dispatch({ type: 'close', id: frontId });
       else if (canExit) onExit();
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [active, canExit, onExit, openApp]);
+  }, [active, canExit, onExit, frontId]);
 
-  useEffect(() => {
-    windowBody.current?.scrollTo({ top: 0 });
-  }, [openApp]);
+  const page = parsePath(path);
+  const frontLine = !front ? mascot.welcome : front.id === 'browser' ? mascot[page.project ? 'project' : page.page] : mascot[front.id];
+  const guideText = toured ? frontLine : mascot.welcome;
+
+  const shortcuts = [
+    ...PAGES.map((item) => ({ key: item.id, label: item.label, icon: item.icon, color: item.color, open: () => visit(item.path) })),
+    ...APPS.filter((app) => app.id !== 'browser').map((app) => ({
+      key: app.id,
+      label: app.id === 'preview' ? sections.preview.shortcutLabel : app.label,
+      icon: app.icon,
+      color: app.color,
+      open: () => openApp(app.id),
+    })),
+  ];
 
   return (
-    <div className={`os ${active ? 'is-active' : ''}`} aria-hidden={!active} inert={active ? undefined : ''}>
+    <div
+      className={`os ${active ? 'is-active' : ''} ${mobile ? 'os--mobile' : ''}`}
+      aria-hidden={!active}
+      inert={active ? undefined : ''}
+    >
       <div className="os__wallpaper" />
 
       <div className="os__bar">
         <div className="os__bar-left">
           <span className="os__brand">
-            <span className="os__brand-dot" /> ClemenOS
+            <span className="os__brand-dot" /> {sections.desktop.name}
           </span>
-          <span className="os__bar-app">{current ? current.label : 'Desktop'}</span>
+          <span className="os__bar-app">{front ? appById(front.id).label : sections.desktop.idleLabel}</span>
         </div>
         <div className="os__bar-right">
           <time className="os__clock">
@@ -64,82 +133,75 @@ export default function LaptopOS({ active, canExit, reducedMotion, onExit }: Pro
           </time>
           {canExit && (
             <button type="button" className="os__exit" onClick={onExit}>
-              <ArrowLeft size={14} /> Back to space
+              <ArrowLeft size={14} /> {sections.desktop.exitLabel}
             </button>
           )}
         </div>
       </div>
 
-      <div className="os__stage">
-        <main className="os__main">
-          {current ? (
-            <section key={current.id} className="window" role="region" aria-label={current.label}>
-              <header className="window__bar">
-                <button
-                  type="button"
-                  className="window__close"
-                  onClick={() => setOpenApp(null)}
-                  aria-label={`Close ${current.label}`}
-                >
-                  <X size={12} strokeWidth={3} />
+      <div className="os__desktop">
+        <div ref={area} className="os__windows">
+          <ul className="desktop-icons" aria-label={sections.desktop.iconsLabel}>
+            {shortcuts.map((item) => (
+              <li key={item.key}>
+                <button type="button" className="desktop-icon" onClick={item.open}>
+                  <span className="app-icon" style={{ background: item.color }}>
+                    <item.icon size={22} strokeWidth={2.2} />
+                  </span>
+                  <span className="desktop-icon__label">{item.label}</span>
                 </button>
-                <span className="window__title">
-                  <current.icon size={14} style={{ color: current.color }} /> {current.label}
-                </span>
-              </header>
-              <div ref={windowBody} className="window__body">
-                <AppContent id={current.id} />
-              </div>
-            </section>
-          ) : (
-            <section className="launcher">
-              <p className="launcher__eyebrow">Clemen's laptop</p>
-              <h2 className="launcher__title">Where would you like to start?</h2>
-              <div className="launcher__grid">
-                {APPS.map((app, index) => (
-                  <button
-                    key={app.id}
-                    type="button"
-                    className="launcher__app"
-                    style={{ animationDelay: `${120 + index * 70}ms` }}
-                    onClick={() => setOpenApp(app.id)}
-                  >
-                    <span className="app-icon app-icon--large" style={{ background: app.color }}>
-                      <app.icon size={30} strokeWidth={2.2} />
-                    </span>
-                    <span className="launcher__label">{app.label}</span>
-                  </button>
-                ))}
-              </div>
-            </section>
-          )}
-        </main>
+              </li>
+            ))}
+          </ul>
 
-        {active && (
-          <AvatarGuide
-            text={openApp ? intros[openApp] : intros.welcome}
-            greeting={!openApp}
-            reducedMotion={reducedMotion}
-          />
-        )}
+          {desktop.windows.map((win) => {
+            const app = appById(win.id);
+            const isBrowser = win.id === 'browser';
+            return (
+              <Window
+                key={win.id}
+                win={win}
+                focused={front?.id === win.id}
+                mobile={mobile}
+                bounds={desktop.bounds}
+                title={isBrowser ? `${pathTitle(path)}, ${app.label}` : app.label}
+                icon={app.icon}
+                color={app.color}
+                bar={isBrowser ? <BrowserTabs state={browser} dispatch={dispatchBrowser} /> : undefined}
+                dispatch={dispatch}
+              >
+                {isBrowser && (
+                  <BrowserView state={browser} dispatch={dispatchBrowser} navigate={navigate} openTab={openTab} />
+                )}
+                {win.id === 'mail' && <MailApp />}
+                {win.id === 'preview' && <PreviewApp />}
+              </Window>
+            );
+          })}
+        </div>
+
+        {active && <AvatarGuide text={guideText} greeting={!toured} reducedMotion={reducedMotion} />}
       </div>
 
-      <nav className="dock" aria-label="Apps">
-        {APPS.map((app) => (
-          <button
-            key={app.id}
-            type="button"
-            className={`dock__app ${openApp === app.id ? 'is-open' : ''}`}
-            onClick={() => setOpenApp(app.id)}
-            aria-label={app.label}
-            aria-current={openApp === app.id ? 'page' : undefined}
-          >
-            <span className="app-icon" style={{ background: app.color }}>
-              <app.icon size={20} strokeWidth={2.2} />
-            </span>
-            <span className="dock__tooltip">{app.label}</span>
-          </button>
-        ))}
+      <nav className="dock" aria-label={sections.desktop.dockLabel}>
+        {APPS.map((app) => {
+          const win = desktop.windows.find((item) => item.id === app.id);
+          return (
+            <button
+              key={app.id}
+              type="button"
+              className={`dock__app ${win ? 'is-open' : ''}`}
+              onClick={() => openApp(app.id)}
+              aria-label={win ? `${app.label}, ${sections.desktop.openState}` : app.label}
+              aria-current={front?.id === app.id ? 'page' : undefined}
+            >
+              <span className="app-icon" style={{ background: app.color }}>
+                <app.icon size={22} strokeWidth={2.2} />
+              </span>
+              <span className="dock__tooltip">{app.label}</span>
+            </button>
+          );
+        })}
       </nav>
     </div>
   );
